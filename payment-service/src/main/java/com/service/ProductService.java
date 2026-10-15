@@ -1,4 +1,4 @@
-package com.client;
+package com.service;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -17,11 +17,11 @@ import java.util.List;
 import com.dto.ProductDto;
 
 @Component
-public class ProductClient {
+public class ProductService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${product.service.url}")
+    @Value("${integrations.clients.productClient.url}")
     private String productServiceUrl;
 
     private final String PRODUCTS_PATH = "/v1/products";
@@ -31,7 +31,7 @@ public class ProductClient {
     private final String USER_ID_PARAM = "userId";
     private final String AMOUNT_PARAM = "amount";
 
-    public ProductClient(RestTemplate restTemplate) {
+    public ProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

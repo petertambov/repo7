@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import com.client.ProductClient;
 import com.dto.PaymentRequestDto;
 import com.dto.PaymentResponseDto;
 import com.dto.BalanceDto;
@@ -17,21 +16,21 @@ import com.exception.MyException;
 @Service
 public class PaymentService {
 
-    private final ProductClient httpClient;
+    private final ProductService productService;
 
-    public PaymentService(ProductClient httpClient) {
-        this.httpClient = httpClient;
+    public PaymentService(ProductService productService) {
+        this.productService = productService;
     }
 
     public List<ProductDto> getProductsWithBalances(Long userId) {
         Objects.requireNonNull(userId, "userId не может быть пустым");
-        return httpClient.getProductsByUserId(userId);
+        return productService.getProductsByUserId(userId);
     }
 
 
     public BalanceDto getProductBalance(Long productId) {
         Objects.requireNonNull(productId, "productId не может быть пустым");
-        ProductDto productDto = httpClient.getProductById(productId);
+        ProductDto productDto = productService.getProductById(productId);
         return new BalanceDto(productId,productDto.balance());
     }
 
@@ -39,7 +38,7 @@ public class PaymentService {
         Objects.requireNonNull(productId, "productId не может быть пустым");
         Objects.requireNonNull(userId, "userId не может быть пустым");
         Objects.requireNonNull(amount, "amount не может быть пустым");
-        ProductDto product = httpClient.getProductById(productId);
+        ProductDto product = productService.getProductById(productId);
 
         if (!product.userId().equals(userId)) {
             throw new MyException(HttpStatus.FORBIDDEN,
@@ -47,9 +46,9 @@ public class PaymentService {
         }
 
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            return httpClient.decBalance(productId, amount.abs());
+            return productService.decBalance(productId, amount.abs());
         } else {
-            return httpClient.incBalance(productId, amount);
+            return productService.incBalance(productId, amount);
         }
     }
 

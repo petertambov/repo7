@@ -3,11 +3,10 @@ server:
   servlet:
     encoding:
       charset: UTF-8
-product:
-  service:
-    url: http://localhost:8080
 
-rest:
-  timeout:
-    connect: 5000
-    read: 10000
+integrations:
+  clients:
+    productClient:
+      url: "http://localhost:8080"
+      connectTimeout: 5s
+      readTimeout: 10s

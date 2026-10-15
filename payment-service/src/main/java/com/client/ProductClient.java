@@ -17,10 +17,12 @@ import java.util.List;
 import com.dto.ProductDto;
 
 @Component
-public class HttpClient {
+public class ProductClient {
 
     private final RestTemplate restTemplate;
-    private final String productServiceUrl;
+
+    @Value("${product.service.url}")
+    private String productServiceUrl;
 
     private final String PRODUCTS_PATH = "/v1/products";
     private final String BY_ID_PATH = PRODUCTS_PATH + "/{id}";
@@ -29,10 +31,8 @@ public class HttpClient {
     private final String USER_ID_PARAM = "userId";
     private final String AMOUNT_PARAM = "amount";
 
-    public HttpClient(RestTemplate restTemplate,
-                                @Value("${product.service.url}") String productServiceUrl) {
+    public ProductClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.productServiceUrl = productServiceUrl;
     }
 
     public List<ProductDto> getProductsByUserId(Long userId) {

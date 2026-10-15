@@ -6,3 +6,8 @@ server:
 product:
   service:
     url: http://localhost:8080
+
+rest:
+  timeout:
+    connect: 5000
+    read: 10000

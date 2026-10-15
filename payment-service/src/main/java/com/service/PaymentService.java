@@ -7,18 +7,19 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import com.client.HttpClient;
+import com.client.ProductClient;
 import com.dto.PaymentRequestDto;
 import com.dto.PaymentResponseDto;
+import com.dto.BalanceDto;
 import com.dto.ProductDto;
 import com.exception.MyException;
 
 @Service
 public class PaymentService {
 
-    private final HttpClient httpClient;
+    private final ProductClient httpClient;
 
-    public PaymentService(HttpClient httpClient) {
+    public PaymentService(ProductClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -27,10 +28,11 @@ public class PaymentService {
         return httpClient.getProductsByUserId(userId);
     }
 
-    public BigDecimal getProductBalance(Long productId) {
+
+    public BalanceDto getProductBalance(Long productId) {
         Objects.requireNonNull(productId, "productId не может быть пустым");
-        ProductDto product = httpClient.getProductById(productId);
-        return product.balance();
+        ProductDto productDto = httpClient.getProductById(productId);
+        return new BalanceDto(productId,productDto.balance());
     }
 
     public ProductDto updateBalance(Long productId, Long userId, BigDecimal amount) {

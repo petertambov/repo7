@@ -1,15 +1,15 @@
 package com.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
+
 
 import com.dto.PaymentRequestDto;
 import com.dto.PaymentResponseDto;
 import com.dto.ProductDto;
+import com.dto.BalanceDto;
 import com.service.PaymentService;
 
 @RestController
@@ -23,30 +23,27 @@ public class PaymentController {
     }
 
     @GetMapping("/products/balance")
-    public ResponseEntity<List<ProductDto>> getProductsBalances(@RequestParam Long userId) {
-        List<ProductDto> products = paymentService.getProductsWithBalances(userId);
-        return ResponseEntity.ok(products);
+    public List<ProductDto> getProductsBalances(@RequestParam Long userId) {
+        return paymentService.getProductsWithBalances(userId);
     }
 
-    @GetMapping("/products/{productId}/balance")
-    public ResponseEntity<Map<String, Object>> getProductBalance(@PathVariable Long productId) {
-        BigDecimal balance = paymentService.getProductBalance(productId);
-        return ResponseEntity.ok(Map.of("productId", productId, "balance", balance));
+    @GetMapping("/products/{productId}")
+    public BalanceDto getProductBalance(@PathVariable Long productId) {
+        return paymentService.getProductBalance(productId);
     }
 
     @PutMapping("/products/{productId}/balance")
-    public ResponseEntity<ProductDto> updateBalance(
+    public ProductDto updateBalance(
             @PathVariable Long productId,
             @RequestParam Long userId,
             @RequestParam BigDecimal amount) {
-        ProductDto updated = paymentService.updateBalance(productId, userId, amount);
-        return ResponseEntity.ok(updated);
+        return paymentService.updateBalance(productId, userId, amount);
     }
 
     @PostMapping("/execute")
-    public ResponseEntity<PaymentResponseDto> executePayment(@RequestBody PaymentRequestDto request) {
-        PaymentResponseDto response = paymentService.executePayment(request);
-        return ResponseEntity.ok(response);
+    public PaymentResponseDto executePayment(@RequestBody PaymentRequestDto request) {
+        return paymentService.executePayment(request);
+
     }
 
 }

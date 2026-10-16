@@ -43,7 +43,6 @@ public class PaymentController {
     @PostMapping("/execute")
     public PaymentResponseDto executePayment(@RequestBody PaymentRequestDto request) {
         return paymentService.executePayment(request);
-
     }
 
 }

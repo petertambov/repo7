@@ -6,7 +6,7 @@ server:
 
 integrations:
   clients:
-    productClient:
+    product-client:
       url: "http://localhost:8080"
-      connectTimeout: 5s
-      readTimeout: 10s
+      connect-timeout: 5s
+      read-timeout: 10s

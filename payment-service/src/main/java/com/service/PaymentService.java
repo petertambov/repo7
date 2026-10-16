@@ -14,12 +14,12 @@ import com.dto.ProductDto;
 import com.exception.MyException;
 
 @Service
-public class PaymentService {
+public class PaymentService{
 
     private final ProductService productService;
 
-    public PaymentService(ProductService productService) {
-        this.productService = productService;
+    public PaymentService(ProductService productClient) {
+        this.productService = productClient;
     }
 
     public List<ProductDto> getProductsWithBalances(Long userId) {

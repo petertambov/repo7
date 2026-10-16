@@ -41,8 +41,8 @@ public class ProductService {
                 product.getId(),
                 product.getAccountNumber(),
                 product.getBalance(),
-                product.getProductType().name()
-                //product.getUser().getId()
+                product.getProductType().name(),
+                product.getUser().getId()
         );
     }
 

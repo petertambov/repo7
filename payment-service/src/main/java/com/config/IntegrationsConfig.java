@@ -15,20 +15,19 @@ import com.client.ProductExceptionHandler;
 @EnableConfigurationProperties(ExternalClientsProperties.class)
 public class IntegrationsConfig {
 
-    private final ExternalClientsProperties clientsProperties;
+    private final ExternalClientsProperties restProperties;
 
     public IntegrationsConfig(ExternalClientsProperties clientsProperties) {
-        this.clientsProperties = clientsProperties;
+        this.restProperties = clientsProperties;
     }
 
-
     @Bean
-    public RestTemplate paymentClient(ProductExceptionHandler errorHandler) {
-        RestTemplateProperties paymentsClient = clientsProperties.getProductClient();
+    public RestTemplate productClient(ProductExceptionHandler errorHandler) {
+        RestTemplateProperties restClient = restProperties.getProductClient();
         return new RestTemplateBuilder()
-                .rootUri(paymentsClient.url())
-                .setConnectTimeout(paymentsClient.connectTimeout())
-                .setReadTimeout(paymentsClient.readTimeout())
+                .rootUri(restClient.url())
+                .setConnectTimeout(restClient.connectTimeout())
+                .setReadTimeout(restClient.readTimeout())
                 .errorHandler(errorHandler)
                 .build();
     }

@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: work_pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: demo_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pg_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data      
+
+volumes:
+  pgdata:
+    name: spring-jdbc-pgdata
